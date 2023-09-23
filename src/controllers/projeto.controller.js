@@ -5,7 +5,10 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Usuario
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body.email) {
+    if (!req.body.codigo && 
+        !req.body.descricao &&
+        !req.body.nome && 
+        !req.body.criador) {
       res.status(400).send({
         projeto: null,
         success: false,
@@ -17,8 +20,8 @@ exports.create = (req, res) => {
     // Create a Usuario
     const projeto = {
       codigo: req.body.codigo,
-      dataCriacao: req.body.dataCriacao,
       descricao: req.body.descricao,
+      dataCriacao: new Date(),
       nome: req.body.nome,
       criador: req.body.criador,
     };

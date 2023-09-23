@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         unique: false
       },
-      nome: {
+      dataCriacao: {
         allowNull: false,
         type: DataTypes.DATE,
         unique: false
