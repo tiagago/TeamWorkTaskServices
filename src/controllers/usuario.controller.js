@@ -24,7 +24,11 @@ exports.create = (req, res) => {
     // Save Usuario in the database
     Usuario.create(usuario)
       .then(data => {
-        res.send(data);
+        res.send({
+          usuario: data,
+          success: true,
+          message: ""
+        });
       })
       .catch(err => {
         res.status(500).send({

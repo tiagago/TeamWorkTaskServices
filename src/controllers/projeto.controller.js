@@ -23,13 +23,17 @@ exports.create = (req, res) => {
       descricao: req.body.descricao,
       dataCriacao: new Date(),
       nome: req.body.nome,
-      criador: req.body.criador,
+      criador: req.body.usuario.id,
     };
   
     // Save Usuario in the database
     Projeto.create(projeto)
       .then(data => {
-        res.send(data);
+        res.send({
+          projeto: data,
+          success: true,
+          message: ""
+        })
       })
       .catch(err => {
         res.status(500).send({
