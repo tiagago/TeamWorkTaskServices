@@ -8,7 +8,7 @@ exports.create = (req, res) => {
     if (!req.body.codigo && 
         !req.body.descricao &&
         !req.body.nome && 
-        !req.body.criador) {
+        !req.body.usuario) {
       res.status(400).send({
         projeto: null,
         success: false,
@@ -54,7 +54,7 @@ exports.findByCriador = (req, res) => {
       return;
     }
 
-    Projeto.findAll({ where: { criador: criador} })
+    Projeto.findAll({ where: { criador: criador} , include: db.usuario })
       .then(data => {
         if (data) {
           res.send(
@@ -82,6 +82,27 @@ exports.findByCriador = (req, res) => {
       });
   };
 
+// Find a single Usuario with an id
+exports.findOneWithParticipantes = (req, res) => {
+  const id = req.params.idProjeto;
+  
+  Projeto.findByPk(id, {include: [{ model: db.usuario,  as: "associados"}]})
+    .then(data => {
+      if (data) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: `Não foi possivel encontrar Projeto com o id=${id}.`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Não foi possivel encontrar Projeto com o id=" + id
+      });
+    });
+  };
+
   // Find a single Usuario with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
@@ -92,13 +113,13 @@ exports.findOne = (req, res) => {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Não foi possivel encontrar Usuário com o id=${id}.`
+          message: `Não foi possivel encontrar Projeto com o id=${id}.`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Não foi possivel encontrar Usuário com o id=" + id
+        message: "Não foi possivel encontrar Projeto com o id=" + id
       });
     });
 };

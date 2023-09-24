@@ -33,12 +33,32 @@ db.sequelize = sequelize;
 
 db.usuario = require("./usuario.model.js")(sequelize, Sequelize);
 db.projeto = require("./projeto.model.js")(sequelize, Sequelize);
+db.tarefa = require("./tarefa.model.js")(sequelize, Sequelize);
+db.tag = require("./tag.model.js")(sequelize, Sequelize);
 
+
+// Referencias One to Many
 db.usuario.hasMany(db.projeto, {
   foreignKey: 'criador'
 }, { as: "projetos" });
 db.projeto.belongsTo(db.usuario, {
   foreignKey: "criador",
 });
+
+
+// Referencias Many to Many
+
+db.usuario.belongsToMany(db.projeto, {
+  through: "tb_projeto_usuario",
+  as: "participa",
+  foreignKey: "usuario_id",
+});
+
+db.projeto.belongsToMany(db.usuario, {
+  through: "tb_projeto_usuario",
+  as: "associados",
+  foreignKey: "projeto_id",
+});
+
 
 module.exports = db;

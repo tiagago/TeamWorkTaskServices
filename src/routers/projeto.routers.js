@@ -7,6 +7,8 @@ module.exports = app => {
     router.post("/", projeto.create);
 
     router.get("/obterMeusProjetos/:criador", projeto.findByCriador);
+
+    router.get("/obterProjetoComParticipantes/:idProjeto", projeto.findOneWithParticipantes);
   
     app.use('/api/projeto', router);
   };

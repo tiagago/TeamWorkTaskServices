@@ -50,7 +50,7 @@ exports.doLogin = (req, res) => {
       return;
     }
 
-    Usuario.findOne({ where: { email: email , senha: senha } })
+    Usuario.findOne({ where: { email: email , senha: senha }})
       .then(data => {
         if (data) {
           res.send(
@@ -82,7 +82,7 @@ exports.doLogin = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Usuario.findByPk(id)
+  Usuario.findByPk(id, {include: [{ model: db.projeto,  as: "participa"}]})
     .then(data => {
       if (data) {
         res.send(data);

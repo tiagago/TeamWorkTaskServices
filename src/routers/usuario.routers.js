@@ -7,7 +7,10 @@ module.exports = app => {
     router.post("/", usuario.create);
     
     // Retrieve a single Tutorial with id
-    router.get("/:id", usuario.findOne);
+    router.get("/doLogin/", usuario.doLogin);
+
+    // Retrieve a single Usuario with id
+    router.get("/obterPorID/:id", usuario.findOne);
   
     // Update a Tutorial with id
     router.put("/:id", usuario.update);
