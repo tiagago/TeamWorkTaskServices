@@ -89,7 +89,12 @@ exports.findOne = (req, res) => {
   Usuario.findByPk(id, {include: [{ model: db.projeto,  as: "participa"}]})
     .then(data => {
       if (data) {
-        res.send(data);
+        res.send(
+          {
+            usuario: data,
+            success: true,
+            message: ""
+          });
       } else {
         res.status(404).send({
           message: `Não foi possivel encontrar Usuário com o id=${id}.`
