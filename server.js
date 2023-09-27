@@ -32,6 +32,7 @@ db.sequelize.sync();
 
 require("./src/routers/usuario.routers")(app);
 require("./src/routers/projeto.routers")(app);
+require("./src/routers/projetoUsuario.routers")(app);
 
 const port = process.env.PORT || 8080;
 
