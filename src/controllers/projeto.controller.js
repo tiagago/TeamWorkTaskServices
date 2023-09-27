@@ -37,6 +37,8 @@ exports.create = (req, res) => {
       })
       .catch(err => {
         res.status(500).send({
+          projeto: null,
+          success: false,
           message:
             err.message || "Ocorreu um erro ao tentar criar um projeto."
         });
@@ -93,15 +95,23 @@ exports.findOneWithParticipantes = (req, res) => {
   Projeto.findByPk(id, {include: [{ model: db.usuario,  as: "associados"}]})
     .then(data => {
       if (data) {
-        res.send(data);
+        res.send({
+          projeto: data,
+          success: true,
+          message: ""
+        });
       } else {
         res.status(404).send({
+          projeto: null,
+          success: false,
           message: `Não foi possivel encontrar Projeto com o id=${id}.`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
+        projeto: null,
+        success: false,
         message: "Não foi possivel encontrar Projeto com o id=" + id
       });
     });
