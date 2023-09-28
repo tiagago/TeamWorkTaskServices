@@ -92,7 +92,7 @@ exports.findByCriador = (req, res) => {
 exports.findOneWithParticipantes = (req, res) => {
   const id = req.params.idProjeto;
   
-  Projeto.findByPk(id, {include: [{ model: db.usuario,  as: "associados"}]})
+  Projeto.findByPk(id, {include: [db.usuario, { model: db.usuario,  as: "associados"}]})
     .then(data => {
       if (data) {
         res.send({
