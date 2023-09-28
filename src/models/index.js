@@ -1,11 +1,13 @@
 const dbConfig = require("../config/db.config.js");
 
 const Sequelize = require("sequelize");
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-  host: dbConfig.HOST,
+const sequelize = new Sequelize("postgres://root:3qbOH3gp6kPtK9rx1Q1Hcb7NYvLKZxcg@dpg-ckatdkciibqc73fpl7j0-a.oregon-postgres.render.com/twtbanco?ssl=true", {
   dialect: dbConfig.dialect,
   operatorsAliases: false,
   define: {
+    charset: 'utf8',
+    collate: 'utf8_general_ci', 
+    timestamps: true,
     // If don't want createdAt
     createdAt: false,
     // If don't want updatedAt

@@ -1,5 +1,5 @@
 module.exports = {
-    HOST: "dpg-ckatdkciibqc73fpl7j0-a",
+    HOST: "dpg-ckatdkciibqc73fpl7j0-a.oregon-postgres.render.com",
     USER: "root",
     PASSWORD: "3qbOH3gp6kPtK9rx1Q1Hcb7NYvLKZxcg",
     DB: "twtbanco",
