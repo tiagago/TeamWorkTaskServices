@@ -15,13 +15,14 @@
     "rest",
     "api",
     "sequelize",
-    "mysql"
+    "postgre"
   ],
   "author": "Thiago Ferreira",
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
-    "mysql2": "^3.6.1",
+    "pg": "^8.11.3",
+    "pg-hstore": "^2.3.4",
     "sequelize": "^6.33.0"
   }
 }
