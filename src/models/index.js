@@ -32,7 +32,6 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-
 db.usuario = require("./usuario.model.js")(sequelize, Sequelize);
 db.projeto = require("./projeto.model.js")(sequelize, Sequelize);
 db.tarefa = require("./tarefa.model.js")(sequelize, Sequelize);
@@ -47,22 +46,33 @@ db.projeto.belongsTo(db.usuario, {
   foreignKey: "criador",
 });
 
-
-db.projeto.hasMany(db.tag, { as: "tags" });
+db.projeto.hasMany(db.tag, {
+  foreignKey: 'projeto_id'
+},  { as: "tags" });
 db.tag.belongsTo(db.projeto, {
   foreignKey: "projeto_id",
 }, { as: "projeto" });
 
-db.projeto.hasMany(db.tarefa, { as: "tarefas" });
+db.projeto.hasMany(db.tarefa, {
+  foreignKey: 'projeto_id'
+}, { as: "tarefas" });
 db.tarefa.belongsTo(db.projeto, {
   foreignKey: "projeto_id",
 }, { as: "projeto" });
 
-db.usuario.hasMany(db.tarefa, { as: "tarefas" });
+db.usuario.hasMany(db.tarefa, {
+  foreignKey: 'usuario_id'
+}, { as: "tarefas" });
 db.tarefa.belongsTo(db.usuario, {
   foreignKey: "usuario_id",
 }, { as: "usuario" });
 
+db.tag.hasMany(db.tarefa, {
+  foreignKey: 'tag_id'
+}, { as: "tarefas" });
+db.tarefa.belongsTo(db.tag, {
+  foreignKey: "tag_id",
+}, { as: "tag" });
 
 // Referencias Many to Many
 
