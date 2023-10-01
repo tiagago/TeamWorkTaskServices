@@ -5,7 +5,7 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Usuario
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body.email) {
+    if (!req.body.usuario) {
       res.status(400).send({
         usuario: null,
         success: false,
@@ -14,15 +14,8 @@ exports.create = (req, res) => {
       return;
     }
   
-    // Create a Usuario
-    const usuario = {
-      email: req.body.email,
-      nomeExibicao: req.body.nomeExibicao,
-      senha: req.body.senha
-    };
-  
     // Save Usuario in the database
-    Usuario.create(usuario)
+    Usuario.create(req.body.usuario)
       .then(data => {
         res.send({
           usuario: data,
@@ -40,11 +33,11 @@ exports.create = (req, res) => {
 
 // Find a single Tutorial with an id
 exports.doLogin = (req, res) => {
-    const email = req.query.email
+    const login = req.query.login
     const senha = req.query.senha
 
     // Validate request
-    if (email == null || senha == null) {
+    if (login == null || senha == null) {
       res.status(400).send(
         {
           usuario: null,
@@ -54,7 +47,7 @@ exports.doLogin = (req, res) => {
       return;
     }
 
-    Usuario.findOne({ where: { email: email , senha: senha }})
+    Usuario.findOne({ where: { login: login , senha: senha }})
       .then(data => {
         if (data) {
           res.send(
@@ -68,7 +61,7 @@ exports.doLogin = (req, res) => {
             {
               usuario: null,
               success: false,
-              message: `Usuário ${email} não cadastrado ou senha inválida.`
+              message: `Usuário ${login} não cadastrado ou senha inválida.`
             });
         }
       })
@@ -77,14 +70,14 @@ exports.doLogin = (req, res) => {
           {
           usuario: null,
           success: false,
-          message: `Usuário ${email} não cadastrado ou senha inválida.`
+          message: `Usuário ${login} não cadastrado ou senha inválida.`
         });
       });
   };
 
   // Find a single Usuario with an id
 exports.findOne = (req, res) => {
-  const id = req.params.id;
+  const id = req.query.idUsuario;
 
   Usuario.findByPk(id, {include: [{ model: db.projeto,  as: "participa"}]})
     .then(data => {
@@ -107,28 +100,3 @@ exports.findOne = (req, res) => {
       });
     });
 };
-
-// Update a Usuario by the id in the request
-exports.update = (req, res) => {
-    const id = req.params.id;
-  
-    Usuario.update(req.body, {
-      where: { id: id }
-    })
-      .then(num => {
-        if (num == 1) {
-          res.send({
-            message: "Tutorial was updated successfully."
-          });
-        } else {
-          res.send({
-            message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found or req.body is empty!`
-          });
-        }
-      })
-      .catch(err => {
-        res.status(500).send({
-          message: "Error updating Tutorial with id=" + id
-        });
-      });
-  };

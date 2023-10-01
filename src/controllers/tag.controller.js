@@ -5,9 +5,8 @@ const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.cor && 
-      !req.body.nome &&
-      !req.body.projeto) {
+  if (!req.body.tag ||
+    !req.body.tag.projeto) {
     res.status(400).send({
       tag: null,
       success: false,
@@ -18,9 +17,9 @@ exports.create = (req, res) => {
 
   // Save Tag in the database
   Tag.create({
-    cor: req.body.cor,
-    nome: req.body.nome,
-    projeto_id: req.body.projeto.id
+    cor: req.body.tag.cor,
+    nome: req.body.tag.nome,
+    projeto_id: req.body.tag.projeto.id
   }).then(data => {
       res.send({
         tag: data,
@@ -40,9 +39,7 @@ exports.create = (req, res) => {
 
 // Update a Usuario by the id in the request
 exports.update = (req, res) => {
-  if (!req.body.cor && 
-      !req.body.nome &&
-      !req.body.id) {
+  if (!req.body.tag) {
     res.status(400).send({
      success: false,
      message: "Conteudo da requisição não pode ser vazio!"
@@ -50,8 +47,8 @@ exports.update = (req, res) => {
     return;
   }
 
-  Tag.update({ cor: req.body.cor, nome: req.body.nome } , {
-      where: { id: req.body.id }
+  Tag.update({ cor: req.body.tag.cor, nome: req.body.tag.nome } , {
+      where: { id: req.body.tag.id }
     }).then(num => {
       if (num == 1) {
         res.send({
@@ -75,12 +72,10 @@ exports.update = (req, res) => {
     });
 };
 
-// Find a single Tutorial with an id
+// Find a single Tag with an id
 exports.obterTagsPorProjeto = (req, res) => {
-  const criador = req.query.projetoId;
-
   // Validate request
-  if (!req.query.projetoId) {
+  if (!req.query.idProjeto) {
     res.status(400).send(
       {
         tags: null,
@@ -90,7 +85,7 @@ exports.obterTagsPorProjeto = (req, res) => {
     return;
   }
 
-  Tag.findAll({ where: { projeto_id: req.query.projetoId}})
+  Tag.findAll({ where: { projeto_id: req.query.idProjeto}})
     .then(data => {
       if (data) {
         res.send(

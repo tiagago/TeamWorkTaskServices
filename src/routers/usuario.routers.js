@@ -10,10 +10,7 @@ module.exports = app => {
     router.get("/doLogin/", usuario.doLogin);
 
     // Retrieve a single Usuario with id
-    router.get("/obterPorID/:id", usuario.findOne);
-  
-    // Update a Tutorial with id
-    router.put("/:id", usuario.update);
+    router.get("/obterPorID/", usuario.findOne);
   
     app.use('/api/usuario', router);
   };

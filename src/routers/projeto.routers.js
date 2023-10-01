@@ -6,9 +6,13 @@ module.exports = app => {
   // Create a new projeto
     router.post("/", projeto.create);
 
-    router.get("/obterMeusProjetos/:criador", projeto.findByCriador);
+    router.put("/", projeto.update);
 
-    router.get("/obterProjetoComParticipantes/:idProjeto", projeto.findOneWithParticipantes);
+    router.get("/obterMeusProjetos/", projeto.findByCriador);
+
+    router.get("/obterProjetoComParticipantes/", projeto.findOneWithParticipantes);
+
+    router.get("/obterProjetoPorCodigo/", projeto.findByCodigo);
   
     app.use('/api/projeto', router);
   };

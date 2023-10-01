@@ -3,8 +3,10 @@ module.exports = app => {
   
     var router = require("express").Router();
   
-    // Delete a Tutorial with id
+    // Delete a projetoUsuarios with id
     router.delete("/", projetoUsuarios.delete);
+
+    router.post("/", projetoUsuarios.create);
 
     app.use('/api/projetoUsuario', router);
   };
