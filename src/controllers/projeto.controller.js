@@ -177,16 +177,19 @@ exports.update = (req, res) => {
     .then(num => {
       if (num == 1) {
         res.send({
+          success: true,
           message: "Tutorial was updated successfully."
         });
       } else {
         res.send({
+          success: false,
           message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found or req.body is empty!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
+        success: false,
         message: "Error updating Tutorial with id=" + id
       });
     });

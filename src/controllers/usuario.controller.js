@@ -5,7 +5,9 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Usuario
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body.usuario) {
+    if (!req.body.usuario.nomeExibicao ||
+      !req.body.usuario.login ||
+      !req.body.usuario.senha) {
       res.status(400).send({
         usuario: null,
         success: false,
@@ -15,7 +17,9 @@ exports.create = (req, res) => {
     }
   
     // Save Usuario in the database
-    Usuario.create(req.body.usuario)
+    Usuario.create({nomeExibicao: req.body.usuario.nomeExibicao,
+       login: req.body.usuario.login, 
+       senha: req.body.usuario.senha})
       .then(data => {
         res.send({
           usuario: data,
@@ -25,6 +29,8 @@ exports.create = (req, res) => {
       })
       .catch(err => {
         res.status(500).send({
+          usuario: null,
+          success: false,
           message:
             err.message || "Ocorreu um erro ao tentar criar um usuario."
         });
