@@ -44,7 +44,6 @@ exports.create = (req, res) => {
   if (!req.body.projeto && 
       !req.body.usuario) {
     res.status(400).send({
-      projeto: null,
       success: false,
       message: "Conteudo da requisição não pode ser vazio!"
     });
@@ -55,14 +54,12 @@ exports.create = (req, res) => {
   ProjetoUsuario.create({ projeto_id: req.body.projeto.id, usuario_id: req.body.usuario.id})
     .then(data => {
       res.send({
-        projeto: data,
         success: true,
         message: ""
       })
     })
     .catch(err => {
       res.status(500).send({
-        projeto: null,
         success: false,
         message:
           err.message || "Ocorreu um erro ao tentar criar um projeto."
