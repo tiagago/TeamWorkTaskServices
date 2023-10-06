@@ -37,6 +37,7 @@ db.projeto = require("./projeto.model.js")(sequelize, Sequelize);
 db.tarefa = require("./tarefa.model.js")(sequelize, Sequelize);
 db.tag = require("./tag.model.js")(sequelize, Sequelize);
 db.projetoUsuario = require("./projetoUsuario.model.js")(sequelize, Sequelize);
+db.projetoUsuario.removeAttribute('id');
 
 // Referencias One to Many
 db.usuario.hasMany(db.projeto, {

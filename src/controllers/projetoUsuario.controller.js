@@ -6,7 +6,7 @@ const Op = db.Sequelize.Op;
 // Delete a ProjetoUsuario with the specified id in the request
 exports.delete = (req, res) => {
     // Validate request
-    if (!req.body.usuario || !req.body.projeto) {
+    if (!req.query.idProjeto || !req.query.idUsuario) {
       res.status(400).send({
         success: false,
         message: "Conteudo da requisição não pode ser vazio!"
@@ -15,7 +15,7 @@ exports.delete = (req, res) => {
     }
 
     ProjetoUsuario.destroy({
-      where: { projeto_id: req.body.projeto.id, usuario_id: req.body.usuario.id }
+      where: { projeto_id: req.query.idProjeto, usuario_id: req.query.idUsuario }
     })
       .then(num => {
         if (num == 1) {
