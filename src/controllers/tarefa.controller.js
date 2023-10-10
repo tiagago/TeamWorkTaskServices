@@ -98,7 +98,7 @@ exports.delete = (req, res) => {
     return;
   }
 
-  ProjetoUsuario.destroy({
+  Tarefa.destroy({
     where: { id: req.query.id }
   })
     .then(num => {
