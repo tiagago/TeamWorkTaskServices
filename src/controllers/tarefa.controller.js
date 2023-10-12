@@ -55,7 +55,7 @@ exports.create = (req, res) => {
 
 // Update a Usuario by the id in the request
 exports.update = (req, res) => {
-  if (!req.body.tag) {
+  if (!req.body.tarefa) {
     res.status(400).send({
      success: false,
      message: "Conteudo da requisição não pode ser vazio!"
