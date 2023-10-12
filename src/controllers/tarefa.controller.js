@@ -63,8 +63,16 @@ exports.update = (req, res) => {
     return;
   }
 
-  Tarefa.update({ cor: req.body.tag.cor, nome: req.body.tag.nome } , {
-      where: { id: req.body.tag.id }
+  Tarefa.update({
+    nome: req.body.tarefa.nome,
+    descricao: req.body.tarefa.descricao,
+    prioridade: req.body.tarefa.prioridade,
+    status: req.body.tarefa.status,
+    dataEntrega: req.body.tarefa.dataEntrega,
+    usuario_id: usuarioId,
+    tag_id: tagId
+    } , {
+      where: { id: req.body.tarefa.id }
     }).then(num => {
       if (num == 1) {
         res.send({
