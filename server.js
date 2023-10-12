@@ -28,6 +28,7 @@ require("./src/routers/projeto.routers")(app);
 require("./src/routers/projetoUsuario.routers")(app);
 require("./src/routers/tag.routers")(app);
 require("./src/routers/tarefa.routers")(app);
+require("./src/routers/historico.routers")(app);
 
 const port = process.env.PORT || 8080;
 

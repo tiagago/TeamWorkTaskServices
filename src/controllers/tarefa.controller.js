@@ -63,6 +63,16 @@ exports.update = (req, res) => {
     return;
   }
 
+  var usuarioId = null
+  var tagId = null
+  if(req.body.tarefa.usuario){
+    usuarioId = req.body.tarefa.usuario.id
+  }
+
+  if(req.body.tarefa.tag){
+    tagId = req.body.tarefa.tag.id
+  }
+  
   Tarefa.update({
     nome: req.body.tarefa.nome,
     descricao: req.body.tarefa.descricao,
