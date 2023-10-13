@@ -43,3 +43,12 @@ exports.obterHistoricoPorProjeto = (req, res) => {
       });
     });
 };
+
+exports.asyncCall = async function asyncCall(descricao, idUsuario, idProjeto) {
+  Historico.create({
+    descricao: descricao,
+    dataCriacao: new Date(),
+    projeto_id: idProjeto,
+    usuario_id: idUsuario
+  });
+}

@@ -1,5 +1,6 @@
 const db = require("../models");
 const Projeto = db.projeto;
+const historicoController = require("../controllers/historico.controller.js");
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Usuario
@@ -27,6 +28,9 @@ exports.create = (req, res) => {
     // Save Usuario in the database
     Projeto.create(projeto)
       .then(data => {
+
+        historicoController.asyncCall("Projeto Criado", req.body.usuario.id, data.id)
+        
         res.send({
           projeto: data,
           success: true,
