@@ -1,6 +1,7 @@
 const { query } = require("express");
 const db = require("../models");
 const Tag = db.tag;
+const historicoController = require("../controllers/historico.controller.js");
 const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
@@ -21,6 +22,8 @@ exports.create = (req, res) => {
     nome: req.body.tag.nome,
     projeto_id: req.body.tag.projeto.id
   }).then(data => {
+      historicoController.asyncCall("Criou a Tag " + req.body.tag.nome, req.body.usuario.id, req.body.tag.projeto.id)
+
       res.send({
         tag: data,
         success: true,
@@ -37,7 +40,7 @@ exports.create = (req, res) => {
     });
 };
 
-// Update a Usuario by the id in the request
+// Update a Tag by the id in the request
 exports.update = (req, res) => {
   if (!req.body.tag) {
     res.status(400).send({
@@ -51,6 +54,7 @@ exports.update = (req, res) => {
       where: { id: req.body.tag.id }
     }).then(num => {
       if (num == 1) {
+        historicoController.asyncCall("Alterou a Tag " + req.body.tag.nome, req.body.usuario.id, req.body.tag.projeto.id)
         res.send({
           success: true,
           message: ""
@@ -72,7 +76,7 @@ exports.update = (req, res) => {
     });
 };
 
-// Find a single Tag with an id
+// Find Tags by id project
 exports.obterTagsPorProjeto = (req, res) => {
   // Validate request
   if (!req.query.idProjeto) {

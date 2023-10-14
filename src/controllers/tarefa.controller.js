@@ -1,6 +1,7 @@
 const { query } = require("express");
 const db = require("../models");
 const Tarefa = db.tarefa;
+const historicoController = require("../controllers/historico.controller.js");
 const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
@@ -37,6 +38,8 @@ exports.create = (req, res) => {
     usuario_id: usuarioId,
     tag_id: tagId
   }).then(data => {
+      historicoController.asyncCall("Criou a Tarefa " + req.body.tarefa.nome, req.body.usuario.id, req.body.tarefa.projeto.id)
+
       res.send({
         tag: data,
         success: true,
@@ -85,6 +88,8 @@ exports.update = (req, res) => {
       where: { id: req.body.tarefa.id }
     }).then(num => {
       if (num == 1) {
+
+        historicoController.asyncCall("Alterou a Tarefa " + req.body.tarefa.nome, req.body.usuario.id, req.body.tarefa.projeto.id)
         res.send({
           success: true,
           message: ""
@@ -121,6 +126,9 @@ exports.delete = (req, res) => {
   })
     .then(num => {
       if (num == 1) {
+
+        historicoController.asyncCall("Excluiu a Tarefa " + req.query.nomeTarefa, req.query.idUsuario, req.query.idProjeto)
+
         res.send({
           success: true,
           message: "Tarefa excluida com sucesso!"
@@ -141,7 +149,7 @@ exports.delete = (req, res) => {
 };
 
 
-// Find a single Tag with an id
+// Find a single Tarefa with an id
 exports.obterTarefasPorProjetoStatus = (req, res) => {
   // Validate request
   if (!req.query.idProjeto ||

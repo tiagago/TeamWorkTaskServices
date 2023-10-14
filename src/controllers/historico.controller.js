@@ -3,7 +3,7 @@ const db = require("../models");
 const Historico = db.historico;
 const Op = db.Sequelize.Op;
 
-// Find a single Tag with an id
+// Get historias by projeto
 exports.obterHistoricoPorProjeto = (req, res) => {
   // Validate request
   if (!req.query.idProjeto) {
@@ -16,7 +16,7 @@ exports.obterHistoricoPorProjeto = (req, res) => {
     return;
   }
 
-  Historico.findAll({ where: { projeto_id: req.query.idProjeto}, include: [db.usuario]})
+  Historico.findAll({ where: { projeto_id: req.query.idProjeto}, order:[['dataCriacao', 'DESC']], include: [db.usuario]})
     .then(data => {
       if (data) {
         res.send(
@@ -50,5 +50,5 @@ exports.asyncCall = async function asyncCall(descricao, idUsuario, idProjeto) {
     dataCriacao: new Date(),
     projeto_id: idProjeto,
     usuario_id: idUsuario
-  });
+  }).then(data => { }).catch(err => {});
 }

@@ -37,7 +37,7 @@ exports.create = (req, res) => {
       });
   };
 
-// Find a single Tutorial with an id
+// Find a single Usuario with an id
 exports.doLogin = (req, res) => {
     const login = req.query.login
     const senha = req.query.senha

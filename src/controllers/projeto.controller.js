@@ -3,7 +3,7 @@ const Projeto = db.projeto;
 const historicoController = require("../controllers/historico.controller.js");
 const Op = db.Sequelize.Op;
 
-// Create and Save a new Usuario
+// Create and Save a new Projeto
 exports.create = (req, res) => {
     // Validate request
     if (!req.body.projeto && 
@@ -16,7 +16,7 @@ exports.create = (req, res) => {
       return;
     }
   
-    // Create a Usuario
+    // Create a Projeto
     const projeto = {
       codigo: req.body.projeto.codigo,
       descricao: req.body.projeto.descricao,
@@ -25,11 +25,11 @@ exports.create = (req, res) => {
       criador: req.body.usuario.id,
     };
   
-    // Save Usuario in the database
+    // Save Projeto in the database
     Projeto.create(projeto)
       .then(data => {
 
-        historicoController.asyncCall("Projeto Criado", req.body.usuario.id, data.id)
+        historicoController.asyncCall("Criou o Projeto", req.body.usuario.id, data.id)
         
         res.send({
           projeto: data,
@@ -47,7 +47,7 @@ exports.create = (req, res) => {
       });
   };
 
-// Find a single Tutorial with an id
+// Find a single Projeto with an id
 exports.findByCriador = (req, res) => {
     const criador = req.query.idUsuario;
 
@@ -90,7 +90,7 @@ exports.findByCriador = (req, res) => {
       });
   };
 
-// Find a single Usuario with an id
+// Find a single Projeto with an id
 exports.findOneWithParticipantes = (req, res) => {
   const id = req.query.idProjeto;
   
@@ -119,7 +119,7 @@ exports.findOneWithParticipantes = (req, res) => {
     });
   };
 
-// Find a single Tutorial with an id
+// Find a single Project by the codigo
 exports.findByCodigo = (req, res) => {
   const codigo = req.query.codigo;
 
@@ -162,7 +162,7 @@ exports.findByCodigo = (req, res) => {
     });
 };
 
-// Update a Usuario by the id in the request
+// Update a Projeto by the id in the request
 exports.update = (req, res) => {
 
   if (!req.body.projeto && 
@@ -180,6 +180,8 @@ exports.update = (req, res) => {
   })
     .then(num => {
       if (num == 1) {
+        historicoController.asyncCall("Alterou o Projeto", req.body.usuario.id, req.body.projeto.id)
+
         res.send({
           success: true,
           message: "Tutorial was updated successfully."

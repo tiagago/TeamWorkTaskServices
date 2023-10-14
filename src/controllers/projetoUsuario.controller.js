@@ -1,6 +1,7 @@
 const { query } = require("express");
 const db = require("../models");
 const ProjetoUsuario = db.projetoUsuario;
+const historicoController = require("../controllers/historico.controller.js");
 const Op = db.Sequelize.Op;
 
 // Delete a ProjetoUsuario with the specified id in the request
@@ -19,6 +20,7 @@ exports.delete = (req, res) => {
     })
       .then(num => {
         if (num == 1) {
+          historicoController.asyncCall("Foi Removido do Projeto " , req.query.idUsuario, req.query.idProjeto)
           res.send({
             success: true,
             message: "Usuário desvinculado do projeto com sucesso!"
@@ -38,7 +40,7 @@ exports.delete = (req, res) => {
       });
   };
 
-  // Create and Save a new Usuario
+  // Include an usuario in project
 exports.create = (req, res) => {
   // Validate request
   if (!req.body.projeto && 
@@ -53,6 +55,8 @@ exports.create = (req, res) => {
   // Save Usuario in the database
   ProjetoUsuario.create({ projeto_id: req.body.projeto.id, usuario_id: req.body.usuario.id})
     .then(data => {
+
+      historicoController.asyncCall("Entrou no Projeto " , req.body.usuario.id, req.body.projeto.id)
       res.send({
         success: true,
         message: ""
